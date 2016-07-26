@@ -14,6 +14,8 @@
 		393BC09B1D4326D600F7E3EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 393BC0991D4326D600F7E3EE /* LaunchScreen.storyboard */; };
 		393BC0A61D4326D600F7E3EE /* ImagePickerExperimentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393BC0A51D4326D600F7E3EE /* ImagePickerExperimentTests.swift */; };
 		393BC0B11D4326D600F7E3EE /* ImagePickerExperimentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393BC0B01D4326D600F7E3EE /* ImagePickerExperimentUITests.swift */; };
+		3952A9A51D46F135001E053B /* TOPDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3952A9A41D46F135001E053B /* TOPDelegate.swift */; };
+		3988B56B1D4705A80015C589 /* BOTTOMDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3988B56A1D4705A80015C589 /* BOTTOMDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		393BC0AC1D4326D600F7E3EE /* ImagePickerExperimentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerExperimentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		393BC0B01D4326D600F7E3EE /* ImagePickerExperimentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerExperimentUITests.swift; sourceTree = "<group>"; };
 		393BC0B21D4326D600F7E3EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3952A9A41D46F135001E053B /* TOPDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOPDelegate.swift; sourceTree = "<group>"; };
+		3988B56A1D4705A80015C589 /* BOTTOMDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOTTOMDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			children = (
 				393BC0901D4326D500F7E3EE /* AppDelegate.swift */,
 				393BC0921D4326D500F7E3EE /* ViewController.swift */,
+				3952A9A41D46F135001E053B /* TOPDelegate.swift */,
+				3988B56A1D4705A80015C589 /* BOTTOMDelegate.swift */,
 				393BC0941D4326D600F7E3EE /* Main.storyboard */,
 				393BC0971D4326D600F7E3EE /* Assets.xcassets */,
 				393BC0991D4326D600F7E3EE /* LaunchScreen.storyboard */,
@@ -258,6 +264,8 @@
 			files = (
 				393BC0931D4326D600F7E3EE /* ViewController.swift in Sources */,
 				393BC0911D4326D500F7E3EE /* AppDelegate.swift in Sources */,
+				3952A9A51D46F135001E053B /* TOPDelegate.swift in Sources */,
+				3988B56B1D4705A80015C589 /* BOTTOMDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +492,7 @@
 				393BC0B71D4326D600F7E3EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		393BC0B81D4326D600F7E3EE /* Build configuration list for PBXNativeTarget "ImagePickerExperimentTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +501,7 @@
 				393BC0BA1D4326D600F7E3EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		393BC0BB1D4326D600F7E3EE /* Build configuration list for PBXNativeTarget "ImagePickerExperimentUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +510,7 @@
 				393BC0BD1D4326D600F7E3EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
