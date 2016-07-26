@@ -18,15 +18,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var BOTTOM:
     UITextField!
     
-    let colors : [String : UIColor] = [
-      
-        "black":  UIColor.blackColor(),
-        "white" : UIColor.whiteColor()
-    ]
     
     let memeTextAttributes = [
-        NSStrokeColorAttributeName : "black", //TODO: Fill in appropriate UIColor,
-        NSForegroundColorAttributeName : "white",//TODO: Fill in UIColor,
+        NSStrokeColorAttributeName : UIColor.blackColor(), //TODO: Fill in appropriate UIColor,
+        NSForegroundColorAttributeName : UIColor.whiteColor(),//TODO: Fill in UIColor,
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName : 3.0//TODO: Fill in appropriate Float
     ]
