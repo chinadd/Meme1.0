@@ -46,6 +46,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         BOTTOM.textAlignment = NSTextAlignment.Center
         
         // Do any additional setup after loading the view, typically from a nib.
+        self.view.frame.origin.y = 0
     }
     
     //Sign up to be notified when the keyboard appears
@@ -56,27 +57,18 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         unsubscribeFromKeyboardNotifications()
-        subscribeToKeyboardNotifications2()
-        unsubscribeFromKeyboardNotifications2()
     }
-    
     
     func subscribeToKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
-    }
-    
-    func subscribeToKeyboardNotifications2() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
     }
+    
     
     func unsubscribeFromKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self,
         name:UIKeyboardWillShowNotification, object: nil)
-    }
-    
-    func unsubscribeFromKeyboardNotifications2() {
         NSNotificationCenter.defaultCenter().removeObserver(self,
         name:UIKeyboardWillHideNotification, object: nil)
     }
@@ -92,11 +84,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
     
     func keyboardWillHide(notification: NSNotification) -> Void{
-        if BOTTOM.isFirstResponder(){
-            self.view.frame.origin.y += getKeyboardHeight(notification)
-        }else {
+        
             self.view.frame.origin.y = 0
-        }
+        
     }
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
