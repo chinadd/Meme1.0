@@ -10,12 +10,6 @@ import UIKit
 
 class ViewController: UIViewController , UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate {
-    
-    @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var autoLayoutContainer: UIView!
-    @IBOutlet weak var imageViewContainer: UIView!
-    @IBOutlet weak var imageViewContainerWidth: NSLayoutConstraint!
-    @IBOutlet weak var imageViewContainerHeight: NSLayoutConstraint!
 
     @IBOutlet weak var imagePickerView: UIImageView!
    
@@ -66,15 +60,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         unsubscribeFromKeyboardNotifications()
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let image = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            self.imagePickerView.image = image
-            
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     func subscribeToKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:"    , name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:"    , name: UIKeyboardWillHideNotification, object: nil)
@@ -109,8 +94,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
     }
-    
-    
+
     @IBAction func pickAnImage(sender: AnyObject) {
         
         let pickerController = UIImagePickerController()
@@ -128,9 +112,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func shareImage(sender: AnyObject) {
-        
-    }
     func textFieldDidBeginEditing(textField: UITextField) {
         currentTextField = textField
         textField.text = ""
@@ -140,43 +121,6 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true;
     }
-    
-    func saveMeme() {
-        let memedImage = self.generateMemedImage()
-        var meme = Meme(texts: (top: TOP.text!, bottom: BOTTOM.text!), image: self.imagePickerView.image!, memedImage: memedImage)
-    }
-    
-    func generateMemedImage() -> UIImage {
-        print(self.imageViewContainer.frame)
-        var multiplier = CGFloat(0)
-        
-        if let image = self.imagePickerView.image {
-            let oldImageSize = self.imageViewContainerWidth.constant;
-            let temporarySize = (image.size.width > image.size.height) ? image.size.height : image.size.width;
-            
-            multiplier = (temporarySize / oldImageSize) * 2;
-        }
-        
-        
-        //self.imageViewContainerWidth.
-        
-        print(self.imageViewContainer.frame)
-        
-        UIGraphicsBeginImageContextWithOptions(self.imageViewContainer.bounds.size, false, multiplier)
-        //UIGraphicsBeginImageContext(self.imageViewContainer.bounds.size)
-        
-        self.imageViewContainer.drawViewHierarchyInRect(self.imageViewContainer.bounds, afterScreenUpdates: true)
-        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        //self.topTextFieldDelegate.applyFontSizeMultiplier(multiplier: 1)
-        //self.bottomTextFieldDelegate.applyFontSizeMultiplier(multiplier: 1)
-        //self.updateImageContainerSize()
-        
-        return memedImage;
-    }
-
     
 }
 

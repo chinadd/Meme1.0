@@ -14,7 +14,6 @@
 		393BC09B1D4326D600F7E3EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 393BC0991D4326D600F7E3EE /* LaunchScreen.storyboard */; };
 		393BC0A61D4326D600F7E3EE /* ImagePickerExperimentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393BC0A51D4326D600F7E3EE /* ImagePickerExperimentTests.swift */; };
 		393BC0B11D4326D600F7E3EE /* ImagePickerExperimentUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393BC0B01D4326D600F7E3EE /* ImagePickerExperimentUITests.swift */; };
-		39C89BC71D49B7D2004D902B /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C89BC61D49B7D2004D902B /* Meme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		393BC0AC1D4326D600F7E3EE /* ImagePickerExperimentUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerExperimentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		393BC0B01D4326D600F7E3EE /* ImagePickerExperimentUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerExperimentUITests.swift; sourceTree = "<group>"; };
 		393BC0B21D4326D600F7E3EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39C89BC61D49B7D2004D902B /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +99,6 @@
 			children = (
 				393BC0901D4326D500F7E3EE /* AppDelegate.swift */,
 				393BC0921D4326D500F7E3EE /* ViewController.swift */,
-				39C89BC61D49B7D2004D902B /* Meme.swift */,
 				393BC0941D4326D600F7E3EE /* Main.storyboard */,
 				393BC0971D4326D600F7E3EE /* Assets.xcassets */,
 				393BC0991D4326D600F7E3EE /* LaunchScreen.storyboard */,
@@ -259,7 +256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39C89BC71D49B7D2004D902B /* Meme.swift in Sources */,
 				393BC0931D4326D600F7E3EE /* ViewController.swift in Sources */,
 				393BC0911D4326D500F7E3EE /* AppDelegate.swift in Sources */,
 			);
