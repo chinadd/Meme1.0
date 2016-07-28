@@ -53,12 +53,19 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         // Do any additional setup after loading the view, typically from a nib.
         self.view.frame.origin.y = 0
-    }
+        
+            }
     
     //Sign up to be notified when the keyboard appears
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        if let imageViewHasImage = self.imagePickerView.image {
+            shareButton.enabled = true
+        } else {
+            shareButton.enabled = false
+        }
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -129,6 +136,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
     
     @IBAction func shareImage(sender: AnyObject) {
+        let memedImage = self.generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        self.presentViewController(activityController, animated: true, completion: nil)
         
     }
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -176,7 +186,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         return memedImage;
     }
-
+    
     
 }
 
