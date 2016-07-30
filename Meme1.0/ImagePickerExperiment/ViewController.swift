@@ -11,17 +11,18 @@ import UIKit
 class ViewController: UIViewController , UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var autoLayoutContainer: UIView!
+    @IBOutlet weak var camera: UIBarButtonItem!
     @IBOutlet weak var imageViewContainer: UIView!
     @IBOutlet weak var imageViewContainerWidth: NSLayoutConstraint!
     @IBOutlet weak var imageViewContainerHeight: NSLayoutConstraint!
 
     @IBOutlet weak var imagePickerView: UIImageView!
    
-    @IBOutlet weak var TOP:UITextField!
+    @IBOutlet weak var top:UITextField!
     
-    @IBOutlet weak var BOTTOM:
+    @IBOutlet weak var bottom:
     UITextField!
     
     var currentTextField : UITextField!
@@ -34,25 +35,25 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         NSStrokeWidthAttributeName : -3.0,//TODO: Fill in appropriate Float
         
     ]
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.TOP.delegate = self
-        self.BOTTOM.delegate = self
+        self.top.delegate = self
+        self.bottom.delegate = self
         
-        TOP.text = "TOP"
-        BOTTOM.text = "BOTTOM"
+        top.text = "TOP"
+        bottom.text = "BOTTOM"
         
-        TOP.defaultTextAttributes = memeTextAttributes
-        BOTTOM.defaultTextAttributes = memeTextAttributes
+        top.defaultTextAttributes = memeTextAttributes
+        bottom.defaultTextAttributes = memeTextAttributes
         
-        TOP.textAlignment = NSTextAlignment.Center
-        BOTTOM.textAlignment = NSTextAlignment.Center
+        top.textAlignment = NSTextAlignment.Center
+        bottom.textAlignment = NSTextAlignment.Center
         
         // Do any additional setup after loading the view, typically from a nib.
         self.view.frame.origin.y = 0
+        //camera button disabled when ruuning on simulator
+        camera.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
             }
     
@@ -60,12 +61,12 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        //share button disabled before image is chosen
         if let imageViewHasImage = self.imagePickerView.image {
             shareButton.enabled = true
-        } else {
+        }else {
             shareButton.enabled = false
         }
-
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -98,7 +99,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     //When the keyboardWillShow notification is received, shift the view's frame up
     func keyboardWillShow(notification: NSNotification) -> Void {
-        if BOTTOM.isFirstResponder() {
+        if bottom.isFirstResponder() {
             self.view.frame.origin.y -= getKeyboardHeight(notification)
         } else {
             self.view.frame.origin.y = 0
@@ -107,7 +108,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func keyboardWillHide(notification: NSNotification) -> Void{
         
-            self.view.frame.origin.y = 0
+            view.frame.origin.y = 0
         
     }
     
@@ -129,6 +130,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
 
     @IBAction func pickAnImageFromCamera(sender: AnyObject) {
+    
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
@@ -137,8 +139,24 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBAction func shareImage(sender: AnyObject) {
         let memedImage = self.generateMemedImage()
+        var completionWithItemsHandler: UIActivityViewControllerCompletionWithItemsHandler?
         let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        activityController.completionWithItemsHandler = {(activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
+            
+            // Return if cancelled
+            if (!completed) {
+                return
+            }
+            
+            //activity complete
+            //some code here
+            
+            
+        }
+        
         self.presentViewController(activityController, animated: true, completion: nil)
+        
+        
         
     }
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -153,7 +171,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func saveMeme() {
         let memedImage = self.generateMemedImage()
-        var meme = Meme(texts: (top: TOP.text!, bottom: BOTTOM.text!), image: self.imagePickerView.image!, memedImage: memedImage)
+        var meme = Meme(texts: (top: top.text!, bottom: bottom.text!), image: self.imagePickerView.image!, memedImage: memedImage)
     }
     
     func generateMemedImage() -> UIImage {
