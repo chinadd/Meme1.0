@@ -12,17 +12,15 @@ class ViewController: UIViewController , UIImagePickerControllerDelegate,
 UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var autoLayoutContainer: UIView!
+   
     @IBOutlet weak var camera: UIBarButtonItem!
-    @IBOutlet weak var imageViewContainer: UIView!
-    @IBOutlet weak var imageViewContainerWidth: NSLayoutConstraint!
-    @IBOutlet weak var imageViewContainerHeight: NSLayoutConstraint!
+    
 
     @IBOutlet weak var imagePickerView: UIImageView!
    
-    @IBOutlet weak var top:UITextField!
+    @IBOutlet weak var topTextField:UITextField!
     
-    @IBOutlet weak var bottom:
+    @IBOutlet weak var bottomTextField:
     UITextField!
     
     var currentTextField : UITextField!
@@ -36,22 +34,28 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
     ]
     
+    func configureTextField(textField: UITextField){
+        textField.text = textField==topTextField ? "TOP" : "BOTTOM"
+        // assign delegate
+        textField.delegate = self
+        // assign attributes
+        textField.defaultTextAttributes = memeTextAttributes
+        // center
+        textField.textAlignment = NSTextAlignment.Center
+        // anything else if needed
+    }
+    
+    //hide status bar
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.top.delegate = self
-        self.bottom.delegate = self
-        
-        top.text = "TOP"
-        bottom.text = "BOTTOM"
-        
-        top.defaultTextAttributes = memeTextAttributes
-        bottom.defaultTextAttributes = memeTextAttributes
-        
-        top.textAlignment = NSTextAlignment.Center
-        bottom.textAlignment = NSTextAlignment.Center
-        
+        configureTextField(topTextField)
+        configureTextField(bottomTextField)
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.frame.origin.y = 0
+        view.frame.origin.y = 0
         //camera button disabled when ruuning on simulator
         camera.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
@@ -99,10 +103,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     //When the keyboardWillShow notification is received, shift the view's frame up
     func keyboardWillShow(notification: NSNotification) -> Void {
-        if bottom.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
-        } else {
-            self.view.frame.origin.y = 0
+        if bottomTextField.isFirstResponder() {
+            view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     
@@ -118,23 +120,25 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return keyboardSize.CGRectValue().height
     }
     
+    func presentImagePickerWith(sourceType: UIImagePickerControllerSourceType){
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = sourceType
+        presentViewController(pickerController, animated: true, completion:nil)
+    }
+
+    
     
     @IBAction func pickAnImage(sender: AnyObject) {
         
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(pickerController, animated: true, completion:nil)
+        presentImagePickerWith(.PhotoLibrary)
     
     }
     
 
     @IBAction func pickAnImageFromCamera(sender: AnyObject) {
     
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        presentViewController(imagePicker, animated: true, completion: nil)
+        presentImagePickerWith(.Camera)
     }
     
     @IBAction func shareImage(sender: AnyObject) {
@@ -144,8 +148,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         activityController.completionWithItemsHandler = {(activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
             
             // Return if cancelled
-            if (!completed) {
-                return
+            if (completed) {
+                self.saveMeme()
             }
             
             //activity complete
@@ -171,40 +175,26 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func saveMeme() {
         let memedImage = self.generateMemedImage()
-        var meme = Meme(texts: (top: top.text!, bottom: bottom.text!), image: self.imagePickerView.image!, memedImage: memedImage)
+        var meme = Meme(texts: (top: topTextField.text!, bottom: bottomTextField.text!), image: self.imagePickerView.image!, memedImage: memedImage)
     }
     
     func generateMemedImage() -> UIImage {
-        print(self.imageViewContainer.frame)
-        var multiplier = CGFloat(0)
-        
-        if let image = self.imagePickerView.image {
-            let oldImageSize = self.imageViewContainerWidth.constant;
-            let temporarySize = (image.size.width > image.size.height) ? image.size.height : image.size.width;
             
-            multiplier = (temporarySize / oldImageSize) * 2;
+            // TODO: Hide toolbar and navbar
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            self.navigationController?.setToolbarHidden(true, animated: true)
+            // Render view to an image
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            view.drawViewHierarchyInRect(self.view.frame,
+                                         afterScreenUpdates: true)
+            let memedImage : UIImage =
+                UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            // TODO:  Show toolbar and navbar       
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            self.navigationController?.setToolbarHidden(false, animated: true)
+            return memedImage
         }
-        
-        
-        //self.imageViewContainerWidth.
-        
-        print(self.imageViewContainer.frame)
-        
-        UIGraphicsBeginImageContextWithOptions(self.imageViewContainer.bounds.size, false, multiplier)
-        //UIGraphicsBeginImageContext(self.imageViewContainer.bounds.size)
-        
-        self.imageViewContainer.drawViewHierarchyInRect(self.imageViewContainer.bounds, afterScreenUpdates: true)
-        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        //self.topTextFieldDelegate.applyFontSizeMultiplier(multiplier: 1)
-        //self.bottomTextFieldDelegate.applyFontSizeMultiplier(multiplier: 1)
-        //self.updateImageContainerSize()
-        
-        return memedImage;
-    }
-    
-    
 }
 
