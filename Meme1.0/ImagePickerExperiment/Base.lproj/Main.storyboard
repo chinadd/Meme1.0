@@ -62,6 +62,11 @@
                                             <action selector="shareImage:" destination="BYZ-38-t0r" id="6jP-3S-aiR"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="cancel" id="i6W-W2-vl2">
+                                        <connections>
+                                            <action selector="cancelMeme:" destination="BYZ-38-t0r" id="uj7-NT-hLQ"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -85,6 +90,7 @@
                     <connections>
                         <outlet property="bottomTextField" destination="aSM-4R-kZr" id="BM6-Go-HME"/>
                         <outlet property="camera" destination="lj4-Mf-mCD" id="u0N-X1-t19"/>
+                        <outlet property="cancelButton" destination="i6W-W2-vl2" id="hee-dW-X4z"/>
                         <outlet property="imagePickerView" destination="U5f-wQ-tEf" id="asu-Ll-gjq"/>
                         <outlet property="shareButton" destination="kf0-Bq-Rcy" id="MMD-Hg-4u1"/>
                         <outlet property="topTextField" destination="nZy-Hb-QA2" id="CIA-Tt-auq"/>

@@ -14,6 +14,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var shareButton: UIBarButtonItem!
    
     @IBOutlet weak var camera: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
 
     @IBOutlet weak var imagePickerView: UIImageView!
@@ -45,12 +46,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // anything else if needed
     }
     
+    func prepareDefaultState() {
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
+        shareButton.enabled = false
+        imagePickerView.image = nil
+    }
+
+    
     //hide status bar
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         configureTextField(topTextField)
         configureTextField(bottomTextField)
@@ -139,6 +149,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBAction func pickAnImageFromCamera(sender: AnyObject) {
     
         presentImagePickerWith(.Camera)
+    }
+    
+    @IBAction func cancelMeme(sender: AnyObject) {
+        prepareDefaultState()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func shareImage(sender: AnyObject) {
